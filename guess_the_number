@@ -1,0 +1,108 @@
+# template for "Guess the number" mini-project
+# input will come from buttons and an input field
+# all output for the game will be printed in the console
+import simplegui
+import random
+
+# initialize global variables used in your code
+secret_number = 0
+number_range = 0
+tries = 0
+ended = False
+
+#Helper function to initialize
+'''
+Displays a welcome message, showing the range and the number of tries
+If the user has already finished a game displays and extra message
+'''
+def init():
+    global ended
+    if ended == True:
+        ended=False
+        print "Let´s play again\n"
+        if number_range==1000:
+            range1000()
+        else: range100()
+    else: 
+        print 'Welcome to "Guess the Number"'
+        print "I've guessed a number between 0 and "+ str(number_range-1) 
+        print "You have " +str(tries)+ " guesses left"
+        print "Please enter your guess or press the buttons to change the range\n" 
+
+def validate_input(guess):
+    global tries
+    if guess.isdigit():
+        
+        return int(guess)
+    else:
+        print '"'+guess + '" is not a valid input'
+        
+        
+
+# define event handlers for control panel        
+def range100():
+    # button that changes range to range [0,100) and restarts
+    global number_range 
+    number_range = 100
+    global secret_number 
+    secret_number = random.randrange(0, 100)
+    #print secret_number
+    global tries 
+    tries = 7
+    init()
+    
+def range1000():
+    # button that changes range to range [0,1000) and restarts
+    global number_range 
+    number_range = 1000
+    global secret_number 
+    secret_number = random.randrange(0, 1000)
+    global tries 
+    tries = 10
+    init()
+    
+def get_input(guess):
+    # main game logic goes here	
+    global tries
+    global ended
+    tries = tries -1
+    print "You have guessed "+ str(guess)
+    print "You have "+str(tries)+ " guesses left"
+    guess= validate_input(guess)
+    
+    if guess >= number_range:
+        print "WARNING: Your guess is out of range"
+    
+    if tries <= 0 and guess != secret_number:
+        print "YOU LOSE! -- You runned out of guesses! -- YOU LOSE!"
+        ended=True
+        init()
+    elif guess == secret_number:
+        print "YOU WON! -- That was the number I choosed -- YOU WON!"
+        ended=True
+        init()
+    elif guess==None:
+        print "Please introduce a NUMBER\n"
+           
+    else:
+        if guess < secret_number:
+            print "My number is HIGHER!\n"
+        else:
+            print "My number is LOWER!\n"
+            
+    
+    
+# create frame
+f = simplegui.create_frame("Guess the number", 200, 200)
+
+# register event handlers for control elements
+f.add_button("Range is [0,1000)", range1000, 200)
+f.add_button("Range is [0,100)", range100, 200)
+f.add_input("Enter a guess", get_input, 200)
+
+# start frame
+f.start()
+range100()
+
+
+# always remember to check your completed program against the grading rubric

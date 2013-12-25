@@ -1,0 +1,86 @@
+# Rock-paper-scissors-lizard-Spock template
+
+
+# The key idea of this program is to equate the strings
+# "rock", "paper", "scissors", "lizard", "Spock" to numbers
+# as follows:
+#
+# 0 - rock
+# 1 - Spock
+# 2 - paper
+# 3 - lizard
+# 4 - scissors
+
+# helper functions
+import random
+def number_to_name(number):
+    """
+    Converts the code number into the name.
+    Returns a string with the name of the choice represent by the number passed.
+    Returns "Option not supported" string if the number doesn't correspond with any of the choices.
+    """
+    if number == 0:
+        return 'rock'
+    elif number == 1:
+        return 'Spock'
+    elif number == 2:
+        return 'paper'
+    elif number == 3:
+        return 'lizard'
+    elif number == 4:
+        return 'scissors'
+    else:
+        return "Option not supported"
+    
+    
+def name_to_number(name):
+    """
+    Converts the name into the code number.
+    Returns a integer that represents the name passed.
+    Returns "Option not supported" string if the name is not on the list of acceptable choices.
+    """
+    if name == 'rock':
+        return 0
+    elif name == 'Spock':
+        return  1
+    elif name == 'paper':
+        return 2
+    elif name == 'lizard':
+        return 3
+    elif name == 'scissors':
+        return 4
+    else:
+        return "Option not supported"
+    
+
+def rpsls(name): 
+    print "\nPlayer chooses " + name
+    player_number=name_to_number(name)
+    if player_number=="Option not supported":
+        print 'Your chooice: "'+ name + '" is not supported. \n Notice that the options are case sensitive. \n Valid options are: "rock", "paper", "scissors", "lizard", "Spock"'
+    else:
+        comp_number=random.randrange(0,5,1)
+        comp_name=number_to_name(comp_number)
+        if comp_name=="Option not supported":
+            print "There was an error generating the computer choice"
+        else:
+            print "Computer chooses " + comp_name
+            result=(player_number-comp_number)%5
+            if result == 0:
+                print "Player and computer tie!"
+            elif result == 1 or result ==2:
+                print "Player wins!"
+            else:
+                print "Computer wins!"
+    
+# test your code
+#rpsls("rock")
+#rpsls("Spock")
+#rpsls("paper")
+#rpsls("lizard")
+#rpsls("scissors")
+#rpsls("spock")
+
+# always remember to check your completed program against the grading rubric
+
+
